@@ -1,0 +1,16 @@
+.input-form {
+    margin: 30px auto;
+    display: flex;
+    justify-content: center;
+}
+
+.input-form__input {
+    margin: 0;
+    padding: 0;
+    width: 30vw;
+}
+
+.input-form__button {
+    cursor: pointer;
+    margin-left: 15px;
+}
