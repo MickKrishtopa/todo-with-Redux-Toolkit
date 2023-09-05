@@ -1,7 +1,7 @@
 import "./App.css";
-import { useState } from "react";
-import { useDispatch } from "react-redux";
-import { addTodo } from "./store/todoSlice";
+import { useState, useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { addNewTodo, fetchTodoList } from "./store/todoSlice";
 
 import InputForm from "./components/InputForm/InputForm";
 import TodoList from "./components/TodoList/TodoList";
@@ -10,10 +10,16 @@ function App() {
     const [text, setText] = useState("");
     const dispatch = useDispatch();
 
+    const { error, status } = useSelector((state) => state.todoList);
+
     const addTast = () => {
-        dispatch(addTodo({ text }));
+        dispatch(addNewTodo(text));
         setText("");
     };
+
+    useEffect(() => {
+        dispatch(fetchTodoList());
+    }, []);
 
     return (
         <div className='App'>
@@ -22,6 +28,9 @@ function App() {
                 handleChangeInput={setText}
                 handleSubmit={addTast}
             />
+
+            {status === "loading" && <h2>Loading...</h2>}
+            {error && <h2>An error occured: {error}</h2>}
             <TodoList />
         </div>
     );
